@@ -79,4 +79,18 @@ curl -H "Content-Type: application/json" -X POST -d '{"IP" : "192.168.0.2", "Res
   "status": "VM successfully released back to free pool"
 }
 
+3. Trying to release the VM that is already in 'free' state
+```
+curl -H "Content-Type: application/json" -X POST -d '{"IP" : "192.168.0.2", "ReservationID" : "883dc1d5-6ee3-4b2a-85bb-d3b7cee4bedd"}' 'http://localhost:5000/vms/api/v1.0/checkin'
+{
+  "error": "VM specified in request is not in reserved state. VM can not be checked In"
+}
+```
 
+4. Malformed request (without ReservationID field)
+```
+curl -H "Content-Type: application/json" -X POST -d '{"IP" : "192.168.0.2"}' 'http://localhost:5000/vms/api/v1.0/checkin'
+{
+  "error": "IP or ReservationID or both the fields are missing in the request"
+}
+```
