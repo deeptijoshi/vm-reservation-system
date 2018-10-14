@@ -78,6 +78,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"IP" : "192.168.0.2", "Res
 {
   "status": "VM successfully released back to free pool"
 }
+```
 
 3. Trying to release the VM that is already in 'free' state
 ```
