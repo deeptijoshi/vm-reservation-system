@@ -74,7 +74,7 @@ Please make sure to take a note of ReservationID mentioned in the response.
 
 2. To release VM back to free pool
 ```
-curl -H "Content-Type: application/json" -X POST -d '{"IP" : "192.168.0.2" "ReservationID" : "883dc1d5-6ee3-4b2a-85bb-d3b7cee4bedd"}' 'http://localhost:5000/vms/api/v1.0/checkin'
+curl -H "Content-Type: application/json" -X POST -d '{"IP" : "192.168.0.2", "ReservationID" : "883dc1d5-6ee3-4b2a-85bb-d3b7cee4bedd"}' 'http://localhost:5000/vms/api/v1.0/checkin'
 {
   "status": "VM successfully released back to free pool"
 }
