@@ -63,7 +63,8 @@ VMs are managed with following attributes:
 ```
 1. cd vm-reservation-system
 2. source bin/activate
-3. py.test --disable-warnings -vv --tb=no
+3. cd tests
+4. py.test --disable-warnings -vv --tb=no
 ```
 
 ### Sample queries to work with this system
