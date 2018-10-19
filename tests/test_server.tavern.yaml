@@ -1,0 +1,134 @@
+---
+test_name: Checkout and Checkin VM1
+stages:
+    - name: Checkout VM1
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkout
+          method: GET
+      response:
+          status_code: 200
+          body:
+              ReservationID: !anything
+              IP: !anything
+          save:
+              body:
+                  reservation_id1: ReservationID
+                  vm_ip1: IP
+
+    - name: Checkin VM1
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkin
+          method: POST
+          json:
+              ReservationID: "{reservation_id1:s}"
+              IP: "{vm_ip1:s}"
+      response:
+          status_code: 200
+          body:
+              status: 'VM successfully released back to free pool'
+
+---
+test_name: Try to checkout a VM 1
+stages:
+    - name: Let's just do a plain checkout
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkout
+          method: GET
+      response:
+          status_code: 200
+          body:
+              ReservationID: !anything
+              IP: !anything
+
+---
+test_name: Try to checkout a VM 2
+stages:
+    - name: Let's just do a plain checkout
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkout
+          method: GET
+      response:
+          status_code: 200
+          body:
+              ReservationID: !anything
+              IP: !anything
+
+---
+test_name: Try to checkout a VM 3
+stages:
+    - name: Let's just do a plain checkout
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkout
+          method: GET
+      response:
+          status_code: 200
+          body:
+              ReservationID: !anything
+              IP: !anything
+
+---
+test_name: Try to checkout a VM 4 and expect 404
+stages:
+    - name: Let's just do a plain checkout
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkout
+          method: GET
+      response:
+          status_code: 404
+          body:
+              error: 'No VM is currently available for checkout Please retry after some time'
+
+---
+test_name: Try to checkin VM with malformed request with missing reservation_id
+stages:
+    - name: Checkin non existing VM
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkin
+          method: POST
+          json:
+              IP: '192.168.0.1'
+      response:
+          status_code: 400
+
+---
+test_name: Try to checkin VM with malformed request with missing IP address
+stages:
+    - name: Checkin non existing VM
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkin
+          method: POST
+          json:
+              ReservationID: 'abcd'
+      response:
+          status_code: 400
+
+---
+test_name: Try to checkin VM 1 with incorrect reservation_id
+stages:
+    - name: Checkin VM1
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkin
+          method: POST
+          json:
+              ReservationID: "xyz"
+              IP: "192.168.0.1"
+      response:
+          status_code: 400
+          body:
+              error: 'Reservation ID specified is not correct. VM can not be checked In'
+
+---
+test_name: Try to checkin non existent VM
+stages:
+    - name: Checkin non existent VM
+      request:
+          url: http://localhost:5000/vms/api/v1.0/checkin
+          method: POST
+          json:
+              ReservationID: "aaa"
+              IP: "10.10.10.1"
+      response:
+          status_code: 400
+          body:
+              error: 'Invalid IP address'
+
