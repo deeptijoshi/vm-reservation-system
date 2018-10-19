@@ -58,6 +58,14 @@ VMs are managed with following attributes:
 7. python server.py
 ```
 
+### Execute tests on this server
+
+```
+1. cd vm-reservation-system
+2. source bin/activate
+3. py.test --disable-warnings -vv --tb=no
+```
+
 ### Sample queries to work with this system
 
 1. To checkout a VM
