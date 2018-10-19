@@ -82,7 +82,7 @@ def reserve_vm():
         response_code = 404
     else:
         print 'VM %s is available for checkout' % vm_available
-        reservation_id = uuid.uuid4()
+        reservation_id = str(uuid.uuid4())
         try:
             update_inventory(vm_available, 'reserved', reservation_id)
             response_body = {
